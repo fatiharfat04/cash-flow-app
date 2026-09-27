@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-cream-300 text-ink antialiased;
+    }
+
+    /* Semua input wajib 16px — mencegah auto zoom Safari/iOS */
+    input,
+    select,
+    textarea {
+        @apply text-base;
+    }
+}
+
+@layer components {
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
