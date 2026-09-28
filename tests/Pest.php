@@ -16,7 +16,24 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
+
+use App\Models\Category;
+
+/**
+ * Kategori global (user_id null) untuk dipakai berbagai test.
+ *
+ * @return array{income: \App\Models\Category, expense: \App\Models\Category}
+ */
+function seedDefaultCategories(): array
+{
+    (new \Database\Seeders\DefaultCategorySeeder())->run();
+
+    return [
+        'income' => Category::whereNull('user_id')->where('type', 'income')->firstOrFail(),
+        'expense' => Category::whereNull('user_id')->where('type', 'expense')->firstOrFail(),
+    ];
+}
 
 /*
 |--------------------------------------------------------------------------
