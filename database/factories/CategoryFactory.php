@@ -23,4 +23,14 @@ class CategoryFactory extends Factory
             'color' => '#D9BC7C',
         ];
     }
+
+    public function income(): static
+    {
+        return $this->state(['type' => 'income']);
+    }
+
+    public function expense(): static
+    {
+        return $this->state(['type' => 'expense']);
+    }
 }
