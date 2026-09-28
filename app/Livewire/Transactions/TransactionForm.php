@@ -123,6 +123,13 @@ class TransactionForm extends Component
         }
     }
 
+    public function updatedDescription(mixed $value): void
+    {
+        if ($value === '') {
+            $this->description = null;
+        }
+    }
+
     #[On('open-create')]
     public function openCreate(): void
     {

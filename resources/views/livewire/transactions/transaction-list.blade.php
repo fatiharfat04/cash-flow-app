@@ -87,7 +87,7 @@
                 >
                     <option value="">Semua kategori</option>
                     @foreach ($this->categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option wire:key="filter-category-{{ $category->id }}" value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -128,7 +128,7 @@
             {{-- Mobile: kartu per item (§9.4) --}}
             <ul class="divide-y divide-cream-200 md:hidden">
                 @foreach ($this->transactions as $transaction)
-                    <li class="p-4">
+                    <li class="p-4" wire:key="tx-mobile-{{ $transaction->id }}">
                         <div class="flex items-center gap-3">
                             <span
                                 class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
@@ -186,7 +186,7 @@
                     </thead>
                     <tbody class="divide-y divide-cream-200">
                         @foreach ($this->transactions as $transaction)
-                            <tr class="transition-colors duration-150 hover:bg-cream-50">
+                            <tr class="transition-colors duration-150 hover:bg-cream-50" wire:key="tx-row-{{ $transaction->id }}">
                                 <td class="whitespace-nowrap px-4 py-3 text-ink-muted">
                                     {{ $transaction->transaction_date->translatedFormat('d M Y') }}
                                 </td>

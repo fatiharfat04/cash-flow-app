@@ -42,6 +42,51 @@ class TransactionList extends Component
 
     protected $listeners = ['transaction-saved' => '$refresh'];
 
+    protected function rules(): array
+    {
+        $required = $this->period === 'custom' ? 'required' : 'nullable';
+
+        return [
+            'period' => 'required|in:today,week,month,custom',
+            'dateFrom' => $required.'|date',
+            'dateTo' => $required.'|date|after_or_equal:dateFrom',
+            'categoryFilter' => 'nullable|integer|exists:categories,id',
+            'typeFilter' => 'nullable|in:income,expense',
+        ];
+    }
+
+    /**
+     * Livewire tidak bisa memasukkan string kosong ke properti bertipe,
+     * jadi dinormalkan dulu supaya validasi & filter tetap bekerja.
+     */
+    public function updatedCategoryFilter(mixed $value): void
+    {
+        if ($value === '' || $value === null) {
+            $this->categoryFilter = null;
+        }
+    }
+
+    public function updatedTypeFilter(mixed $value): void
+    {
+        if ($value === '' || $value === null) {
+            $this->typeFilter = null;
+        }
+    }
+
+    public function updatedDateFrom(mixed $value): void
+    {
+        if ($value === '') {
+            $this->dateFrom = null;
+        }
+    }
+
+    public function updatedDateTo(mixed $value): void
+    {
+        if ($value === '') {
+            $this->dateTo = null;
+        }
+    }
+
     public function filters(): array
     {
         return [
@@ -73,15 +118,7 @@ class TransactionList extends Component
 
     public function applyFilter(): void
     {
-        if ($this->period === 'custom') {
-            $this->validate([
-                'dateFrom' => 'required|date',
-                'dateTo' => 'required|date|after_or_equal:dateFrom',
-            ]);
-        } else {
-            $this->resetValidation();
-        }
-
+        $this->validate();
         $this->resetPage();
     }
 

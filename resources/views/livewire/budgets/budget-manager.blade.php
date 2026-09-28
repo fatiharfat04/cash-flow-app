@@ -53,7 +53,7 @@
         <ul class="divide-y divide-cream-200">
             @forelse ($this->categories as $category)
                 @php($row = $this->budgetStatus->firstWhere('category.id', $category->id))
-                <li class="p-4 md:p-6" x-data>
+                <li class="p-4 md:p-6" wire:key="budget-category-{{ $category->id }}" x-data>
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div class="flex min-w-0 items-center gap-3">
                             <span
@@ -77,25 +77,28 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-2">
-                            <label for="limit-{{ $category->id }}" class="sr-only">Limit {{ $category->name }}</label>
-                            <div class="relative min-w-0 flex-1 sm:w-48 sm:flex-none">
-                                <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-ink-muted" aria-hidden="true">Rp</span>
-                                <input
-                                    x-ref="limit"
-                                    wire:model="limits.{{ $category->id }}"
-                                    id="limit-{{ $category->id }}"
-                                    type="number"
-                                    min="1"
-                                    step="1"
-                                    inputmode="numeric"
-                                    placeholder="0"
-                                    class="w-full rounded-lg border-cream-300 py-2.5 pl-9 pr-3 text-base shadow-sm transition-colors duration-150 focus:border-cream-500 focus:ring-cream-500"
-                                />
+                        <div class="w-full sm:w-auto">
+                            <div class="flex items-center gap-2">
+                                <label for="limit-{{ $category->id }}" class="sr-only">Limit {{ $category->name }}</label>
+                                <div class="relative min-w-0 flex-1 sm:w-48 sm:flex-none">
+                                    <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-ink-muted" aria-hidden="true">Rp</span>
+                                    <input
+                                        x-ref="limit"
+                                        wire:model="limits.{{ $category->id }}"
+                                        id="limit-{{ $category->id }}"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        inputmode="numeric"
+                                        placeholder="0"
+                                        class="w-full rounded-lg border-cream-300 py-2.5 pl-9 pr-3 text-base shadow-sm transition-colors duration-150 focus:border-cream-500 focus:ring-cream-500"
+                                    />
+                                </div>
+                                <x-button x-on:click="$wire.saveBudget({{ $category->id }}, Number($refs.limit.value) || 0)">
+                                    Simpan
+                                </x-button>
                             </div>
-                            <x-button x-on:click="$wire.saveBudget({{ $category->id }}, Number($refs.limit.value) || 0)">
-                                Simpan
-                            </x-button>
+                            <x-input-error :messages="$errors->get('limits.'.$category->id)" />
                         </div>
                     </div>
 

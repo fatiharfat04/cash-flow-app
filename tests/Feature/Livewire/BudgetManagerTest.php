@@ -130,10 +130,12 @@ it('reports an exceeded status when spending passes the limit', function () {
 });
 
 it('rejects a limit below one rupiah', function () {
+    $categoryId = $this->categories['expense']->id;
+
     Livewire::actingAs($this->user)
         ->test(BudgetManager::class)
-        ->call('saveBudget', $this->categories['expense']->id, 0)
-        ->assertSet('noticeType', 'error');
+        ->call('saveBudget', $categoryId, 0)
+        ->assertHasErrors(['limits.'.$categoryId => 'min']);
 
     expect(Budget::count())->toBe(0);
 });

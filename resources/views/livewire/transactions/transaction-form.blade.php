@@ -88,7 +88,7 @@
                         >
                             <option value="">Pilih kategori</option>
                             @foreach ($this->categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option wire:key="form-category-{{ $category->id }}" value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('category_id')" />

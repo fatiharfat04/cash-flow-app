@@ -79,7 +79,7 @@
                         class="w-full rounded-lg border-cream-300 px-3 py-2.5 text-base shadow-sm focus:border-cream-500 focus:ring-cream-500"
                     >
                         @foreach ($this->availableIcons as $availableIcon)
-                            <option value="{{ $availableIcon }}">{{ $availableIcon }}</option>
+                            <option wire:key="icon-{{ $availableIcon }}" value="{{ $availableIcon }}">{{ $availableIcon }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -117,14 +117,14 @@
         <h2 class="mb-4 text-lg font-semibold text-ink">Daftar Kategori</h2>
 
         @forelse ($this->categories as $typeKey => $groups)
-            <div class="mb-5 last:mb-0">
+            <div class="mb-5 last:mb-0" wire:key="category-group-{{ $typeKey }}">
                 <h3 class="mb-2 text-sm font-medium text-ink-muted">
                     {{ $typeKey === 'income' ? 'Pemasukan' : 'Pengeluaran' }}
                 </h3>
 
                 <ul class="divide-y divide-cream-200">
                     @foreach ($groups as $category)
-                        <li class="flex items-center gap-3 py-3">
+                        <li class="flex items-center gap-3 py-3" wire:key="category-{{ $category->id }}">
                             <span
                                 class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
                                 style="background-color: {{ $category->color }}22; color: {{ $category->color }}"

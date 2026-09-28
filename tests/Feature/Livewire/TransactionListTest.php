@@ -125,6 +125,40 @@ it('requires a valid custom date range', function () {
         ->assertHasErrors(['dateTo' => 'after_or_equal']);
 });
 
+it('requires both custom dates before the filter is applied', function () {
+    Livewire::actingAs($this->user)
+        ->test(TransactionList::class)
+        ->set('period', 'custom')
+        ->call('applyFilter')
+        ->assertHasErrors(['dateFrom' => 'required', 'dateTo' => 'required']);
+});
+
+it('clears the category filter when the empty option is chosen again', function () {
+    $transport = Category::whereNull('user_id')->where('name', 'Transportasi')->firstOrFail();
+    listTransaction($this->user, ['category_id' => $transport->id, 'description' => 'Taksi ke kantor']);
+    listTransaction($this->user);
+
+    Livewire::actingAs($this->user)
+        ->test(TransactionList::class)
+        ->set('categoryFilter', $transport->id)
+        ->call('applyFilter')
+        ->assertSet('categoryFilter', $transport->id)
+        ->set('categoryFilter', '')
+        ->assertSet('categoryFilter', null)
+        ->call('applyFilter')
+        ->assertHasNoErrors()
+        ->assertSee('Taksi ke kantor')
+        ->assertSee('Transaksi umum');
+});
+
+it('rejects a period outside the supported values', function () {
+    Livewire::actingAs($this->user)
+        ->test(TransactionList::class)
+        ->set('period', 'all-time')
+        ->call('applyFilter')
+        ->assertHasErrors(['period' => 'in']);
+});
+
 it('filters by category and by type', function () {
     $transport = Category::whereNull('user_id')->where('name', 'Transportasi')->firstOrFail();
 

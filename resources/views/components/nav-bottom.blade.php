@@ -26,6 +26,7 @@
             <a
                 href="{{ route($item['route']) }}"
                 wire:navigate
+                wire:key="nav-bottom-{{ $item['route'] }}"
                 @class([
                     'flex h-16 flex-col items-center justify-center gap-0.5 text-xs transition-colors duration-150',
                     'text-cream-600 font-medium' => request()->routeIs($item['active']),

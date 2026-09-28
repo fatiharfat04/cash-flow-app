@@ -55,6 +55,7 @@ new class extends Component
                 <a
                     href="{{ route($item['route']) }}"
                     wire:navigate
+                    wire:key="nav-side-{{ $item['route'] }}"
                     @class([
                         'flex items-center gap-3 rounded-lg px-3 py-2.5 text-base transition-colors duration-150',
                         'bg-cream-100 font-medium text-ink' => request()->routeIs($item['active']),

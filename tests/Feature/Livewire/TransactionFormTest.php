@@ -100,6 +100,18 @@ it('rejects a transaction dated in the future', function () {
     expect(Transaction::count())->toBe(0);
 });
 
+it('stores an empty description as null', function () {
+    Livewire::actingAs($this->user)
+        ->test(TransactionForm::class)
+        ->set('category_id', $this->categories['expense']->id)
+        ->set('amount', 25000)
+        ->set('description', '')
+        ->call('save')
+        ->assertHasNoErrors();
+
+    expect(Transaction::sole()->description)->toBeNull();
+});
+
 it('requires a category', function () {
     Livewire::actingAs($this->user)
         ->test(TransactionForm::class)

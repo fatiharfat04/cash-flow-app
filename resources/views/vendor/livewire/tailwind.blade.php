@@ -88,6 +88,7 @@
                         @if ($page == $paginator->currentPage())
                             <span
                                 aria-current="page"
+                                wire:key="pagination-page-{{ $page }}"
                                 class="inline-flex h-11 min-w-[44px] items-center justify-center rounded-lg bg-cream-500 px-3 text-base font-semibold text-ink"
                             >
                                 {{ $page }}
@@ -97,6 +98,7 @@
                                 type="button"
                                 wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
                                 x-on:click="{{ $scrollIntoViewJsSnippet }}"
+                                wire:key="pagination-page-{{ $page }}"
                                 aria-label="Halaman {{ $page }}"
                                 class="inline-flex h-11 min-w-[44px] items-center justify-center rounded-lg border border-cream-400 bg-white px-3 text-base font-medium text-ink transition-colors duration-150 hover:bg-cream-50"
                             >

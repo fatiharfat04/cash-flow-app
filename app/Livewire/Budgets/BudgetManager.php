@@ -39,6 +39,14 @@ class BudgetManager extends Component
         return app(BudgetService::class)->getBudgetStatus(auth()->user(), $this->month);
     }
 
+    protected function rules(): array
+    {
+        return [
+            'limits' => 'array',
+            'limits.*' => 'required|integer|min:1|max:999999999999',
+        ];
+    }
+
     /** Semua kategori pengeluaran yang visibleTo user login (untuk form limit). */
     public function getCategoriesProperty(): Collection
     {
@@ -70,15 +78,13 @@ class BudgetManager extends Component
             return;
         }
 
-        if ($amount < 1 || $amount > 999999999999) {
-            $this->setNotice('error', 'Limit budget harus antara Rp1 sampai Rp999.999.999.999.');
+        // Dinormalkan ke properti dulu supaya bisa divalidasi lewat rules() (§14 DoD #2)
+        $this->limits[$category->id] = $amount;
 
-            return;
-        }
+        $this->validate(['limits.'.$category->id => $this->rules()['limits.*']]);
 
         app(BudgetService::class)->setBudget(auth()->user(), $category->id, $this->month, $amount);
 
-        $this->limits[$category->id] = $amount;
         $this->syncLimitsFromStatus();
         $this->setNotice('success', 'Limit "'.$category->name.'" untuk '.$this->month->translatedFormat('F Y').' berhasil disimpan.');
     }
