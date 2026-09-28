@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Akan berubah jadi Livewire component di Fase 7 (lihat §8 PROJECT.md)
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+});
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::view('/', 'welcome');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
