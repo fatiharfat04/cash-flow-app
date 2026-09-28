@@ -67,18 +67,15 @@ class TransactionsExport implements FromQuery, WithHeadings, WithMapping, WithSt
                 $sheet = $event->sheet->getDelegate();
                 $row = $sheet->getHighestRow() + 2;
 
-                $sheet->setCellValue(['column' => 'A', 'row' => $row], 'TOTAL');
+                $sheet->setCellValue('A'.$row, 'TOTAL');
                 $sheet->setCellValue(
-                    ['column' => 'D', 'row' => $row],
+                    'D'.$row,
                     'Pemasukan: Rp'.number_format($this->summary['total_income'], 0, ',', '.')
                     .' | Pengeluaran: Rp'.number_format($this->summary['total_expense'], 0, ',', '.')
                 );
-                $sheet->setCellValue(['column' => 'E', 'row' => $row], $this->summary['balance']);
+                $sheet->setCellValue('E'.$row, $this->summary['balance']);
 
-                foreach (['A', 'B', 'C', 'D', 'E'] as $column) {
-                    $sheet->getCell($column.$row)->setFont(\PhpOffice\PhpSpreadsheet\Style\Font::bold());
-                }
-
+                $sheet->getStyle('A'.$row.':E'.$row)->getFont()->setBold(true);
                 $sheet->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
             },
         ];
