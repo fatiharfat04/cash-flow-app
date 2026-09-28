@@ -7,7 +7,7 @@
 
     {{-- Kartu ringkasan --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Saldo</p>
             <p class="mt-1 text-xl font-semibold tabular-nums {{ $this->summary['balance'] < 0 ? 'text-expense' : 'text-ink' }}">
                 {{ \App\Support\Money::format($this->summary['balance']) }}
@@ -15,7 +15,7 @@
             <p class="mt-1 text-xs text-ink-muted">Total sepanjang waktu</p>
         </x-card>
 
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Pemasukan Bulan Ini</p>
             <p class="mt-1 text-xl font-semibold tabular-nums text-income">
                 {{ \App\Support\Money::format($this->summary['income_this_month']) }}
@@ -23,7 +23,7 @@
             <p class="mt-1 text-xs text-ink-muted">Periode berjalan</p>
         </x-card>
 
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Pengeluaran Bulan Ini</p>
             <p class="mt-1 text-xl font-semibold tabular-nums text-expense">
                 {{ \App\Support\Money::format($this->summary['expense_this_month']) }}
@@ -85,7 +85,7 @@
         <x-card :padded="false">
             <div class="flex items-center justify-between gap-3 border-b border-cream-200 p-4 md:p-6">
                 <h2 class="text-base font-semibold text-ink">Transaksi Terbaru</h2>
-                <a href="{{ route('transactions.index') }}" wire:navigate class="text-sm font-medium text-cream-600 hover:text-cream-700">
+                <a href="{{ route('transactions.index') }}" wire:navigate class="text-sm font-medium text-ink-muted underline underline-offset-4 transition-colors duration-150 hover:text-ink">
                     Lihat semua
                 </a>
             </div>
@@ -122,7 +122,7 @@
         <x-card :padded="false">
             <div class="flex items-center justify-between gap-3 border-b border-cream-200 p-4 md:p-6">
                 <h2 class="text-base font-semibold text-ink">Status Budget</h2>
-                <a href="{{ route('budgets.index') }}" wire:navigate class="text-sm font-medium text-cream-600 hover:text-cream-700">
+                <a href="{{ route('budgets.index') }}" wire:navigate class="text-sm font-medium text-ink-muted underline underline-offset-4 transition-colors duration-150 hover:text-ink">
                     Atur limit
                 </a>
             </div>
@@ -142,7 +142,7 @@
                 @empty
                     <li class="p-4 text-sm text-ink-muted">
                         Belum ada limit budget bulan ini.
-                        <a href="{{ route('budgets.index') }}" wire:navigate class="font-medium text-cream-600 hover:text-cream-700">Atur sekarang</a>
+                        <a href="{{ route('budgets.index') }}" wire:navigate class="font-medium text-ink-muted underline underline-offset-4 transition-colors duration-150 hover:text-ink">Atur sekarang</a>
                     </li>
                 @endforelse
             </ul>

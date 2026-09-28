@@ -110,7 +110,7 @@ new class extends Component
         wire:click="logout"
         type="button"
         aria-label="Keluar dari akun"
-        class="flex h-10 w-10 items-center justify-center rounded-full text-ink-muted transition-colors duration-150 hover:bg-cream-100 hover:text-expense"
+        class="flex h-11 w-11 items-center justify-center rounded-full text-ink-muted transition-colors duration-150 hover:bg-cream-100 hover:text-expense"
     >
         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="{{ $icons['logout'] }}" />

@@ -26,19 +26,19 @@
 
     {{-- Ringkasan sesuai filter yang aktif --}}
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Total Pemasukan</p>
             <p class="mt-1 text-lg font-semibold tabular-nums text-income">
                 {{ \App\Support\Money::format($this->summary['total_income']) }}
             </p>
         </x-card>
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Total Pengeluaran</p>
             <p class="mt-1 text-lg font-semibold tabular-nums text-expense">
                 {{ \App\Support\Money::format($this->summary['total_expense']) }}
             </p>
         </x-card>
-        <x-card class="p-4 md:p-5">
+        <x-card>
             <p class="text-sm text-ink-muted">Saldo</p>
             <p class="mt-1 text-lg font-semibold tabular-nums {{ $this->summary['balance'] < 0 ? 'text-expense' : 'text-ink' }}">
                 {{ \App\Support\Money::format($this->summary['balance']) }}
